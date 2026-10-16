@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>my little album diary ♡</title>
+  <meta name="description" content="A little corner of the internet dedicated to my favorite albums.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+
+    :root {
+      --pink: #f5dce5;
+      --pink-dark: #d89bb3;
+      --cream: #fffaf5;
+      --ink: #49343e;
+      --muted: #927b85;
+      --line: #eddde3;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+    }
+
+    button, input { font: inherit; }
+
+    a { color: inherit; }
+
+    .top-note {
+      text-align: center;
+      padding: 9px 16px;
+      background: var(--pink);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    header {
+      text-align: center;
+      padding: 48px 20px 35px;
+    }
+
+    .eyebrow {
+      color: var(--pink-dark);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: clamp(38px, 7vw, 68px);
+      line-height: 1.1;
+      margin: 12px 0;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tiny-hearts {
+      color: var(--pink-dark);
+      letter-spacing: 8px;
+      font-size: 17px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 22px 60px;
+    }
+
+    .intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 17px 0;
+      margin-bottom: 24px;
+    }
+
+    .intro h2 {
+      font-size: 22px;
+      margin: 0;
+    }
+
+    .intro p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 3px 0 0;
+    }
+
+    .count {
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 7px 12px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .album-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .album {
+      display: grid;
+      grid-template-columns: 35px 104px 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding: 16px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .album:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px #6c3c4d0c;
+    }
+
+    .rank {
+      color: var(--pink-dark);
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .cover-button {
+      border: 0;
+      padding: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background: none;
+      width: 104px;
+      aspect-ratio: 1;
+      box-shadow: 0 3px 8px #49343e1a;
+    }
+
+    .cover {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+      text-align: left;
+      transition: transform .3s;
+      color: white;
+    }
+
+    .cover-button:hover .cover { transform: scale(1.06); }
+
+    .cover small {
+      font-size: 8px;
+      letter-spacing: 2px;
+    }
+
+    .cover strong {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.1;
+      overflow-wrap: anywhere;
+    }
+
+    .cover em {
+      font-size: 9px;
+      font-style: normal;
+    }
+
+    .cover-one {
+      background: radial-gradient(circle at 70% 25%, #f9d5df 0 8%, transparent 9%),
+        linear-gradient(145deg, #bd829e, #593f61);
+    }
+
+    .cover-two {
+      background: radial-gradient(ellipse at 50% 35%, #f5d3a4 0 16%, transparent 17%),
+        linear-gradient(155deg, #e5a78f, #985a63);
+    }
+
+    .cover-three {
+      background: radial-gradient(circle at 35% 35%, #f4d8ed 0 12%, transparent 13%),
+        linear-gradient(145deg, #a8a6c8, #575777);
+    }
+
+    .album-info { min-width: 0; }
+
+    .album-info h3 {
+      font-size: 21px;
+      margin: 0 0 2px;
+      line-height: 1.25;
+    }
+
+    .artist {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .mini-review {
+      font-size: 12px;
+      margin: 8px 0 0;
+      color: #715e67;
+    }
+
+    .score {
+      align-self: start;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      min-width: 48px;
+      text-align: center;
+      padding: 7px 5px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .score small {
+      display: block;
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .bottom-note {
+      margin-top: 30px;
+      padding: 24px;
+      text-align: center;
+      background: #f9edf1;
+      border-radius: 15px;
+    }
+
+    .bottom-note p {
+      margin: 5px 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    /* Album review popup */
+    dialog {
+      width: min(480px, calc(100% - 28px));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 25px;
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 0 20px 70px #49343e30;
+    }
+
+    dialog::backdrop { background: #38232d88; }
+
+    .close-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .close-button {
+      background: var(--pink);
+      border: 0;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+    }
+
+    .review-cover {
+      width: 105px;
+      aspect-ratio: 1;
+      border-radius: 10px;
+      margin: 10px 0;
+      box-shadow: 0 4px 12px #49343e20;
+    }
+
+    .review-text { color: #715e67; font-size: 14px; }
+
+    .music-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .music-links a {
+      flex: 1;
+      min-width: 135px;
+      text-align: center;
+      text-decoration: none;
+      padding: 11px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--pink);
+    }
+
+    .music-links a:hover { background: #edc9d8; }
+
+    @media (max-width: 560px) {
+      header { padding-top: 35px; }
+      main { padding: 0 13px 40px; }
+
+      .album {
+        grid-template-columns: 23px 76px minmax(0, 1fr);
+        gap: 10px;
+        padding: 11px;
+      }
+
+      .cover-button { width: 76px; }
+      .cover { padding: 7px; }
+      .cover strong { font-size: 13px; }
+      .cover small { font-size: 6px; }
+      .album-info h3 { font-size: 17px; }
+      .mini-review { font-size: 11px; }
+      .score {
+        grid-column: 3;
+        justify-self: start;
+        align-self: auto;
+        margin-top: -3px;
+        font-size: 12px;
+        padding: 3px 8px;
+      }
+
+      .score small { display: inline; margin-left: 3px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-note">♡ a little love letter to music ♡</div>
+
+  <header>
+    <div class="eyebrow">the listening diary · est. 2026</div>
+    <h1>my little album diary</h1>
+    <p>good music, big feelings and albums on repeat.</p>
+    <div class="tiny-hearts">✳ ♡ ✳</div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div>
+        <h2>the album rankings</h2>
+        <p>my personal favorites, one record at a time.</p>
+      </div>
+      <div class="count">a work in progress ♡</div>
+    </section>
+
+    <section class="album-list" aria-label="Ranked albums">
+
+      <!-- SAMPLE ALBUM 1 -->
+      <article class="album">
+        <div class="rank">01</div>
+        <button class="cover-button" aria-label="Read album review"
+          data-album="0">
+          <div class="cover cover-one">
+            <small>RECORD NO. 01</small>
+            <strong>album<br>one</strong>
+            <em>♡ on repeat</em>
+          </div>
+        </button>
+        <div class="album-info">
+          <h3>Album One</h3>
+          <div class="artist">Artist Name</div>
+          <p class="mini-review">The kind of album that makes an ordinary day feel cinematic.</p>
+        </div>
+        <div class="score">96<small>/100</small></div>
+      </article>
+
+      <!-- SAMPLE ALBUM 2 -->
+      <article class="album">
+        <div class="rank">02</div>
+        <button class="cover-button" aria-label="Read album review"
+          data-album="1">
+          <div class="cover cover-two">
+            <small>RECORD NO. 02</small>
+            <strong>album<br>two</strong>
+            <em>☼ golden hour</em>
+          </div>
+        </button>
+        <div class="album-info">
+          <h3>Album Two</h3>
+          <div class="artist">Another Artist</div>
+          <p class="mini-review">Warm, nostalgic and best enjoyed with the windows down.</p>
+        </div>
+        <div class="score">93<small>/100</small></div>
+      </article>
+
+      <!-- SAMPLE ALBUM 3 -->
+      <article class="album">
+        <div class="rank">03</div>
+        <button class="cover-button" aria-label="Read album review"
+          data-album="2">
+          <div class="cover cover-three">
+            <small>RECORD NO. 03</small>
+            <strong>album<br>three</strong>
+            <em>☾ after hours</em>
+          </div>
+        </button>
+        <div class="album-info">
+          <h3>Album Three</h3>
+          <div class="artist">A Favorite Artist</div>
+          <p class="mini-review">A little dreamy, a little devastating. I get it now.</p>
+        </div>
+        <div class="score">91<small>/100</small></div>
+      </article>
+
+    </section>
+
+    <section class="bottom-note">
+      <h2>that's the magic of music ♡</h2>
+      <p>every album has a story. these are the ones that stayed with me.</p>
+      <p>more reviews coming soon ✿</p>
+    </section>
+  </main>
+
+  <footer>made with music & a little too much love ♡ · 2026</footer>
+
+  <dialog id="review">
+    <div class="close-row">
+      <button class="close-button" id="close-review" aria-label="Close review">✕</button>
+    </div>
+    <div id="review-content"></div>
+  </dialog>
+
+  <script>
+    // Replace these sample entries with your real albums!
+    const albums = [
+      {
+        title: "Album One",
+        artist: "Artist Name",
+        score: 96,
+        cover: "cover-one",
+        review: "This album feels like a little universe of its own. I love the details, the atmosphere and the way it makes ordinary moments feel special.",
+        favorite: "Your favorite track goes here",
+        spotify: "https://open.spotify.com/search/Artist%20Name%20Album%20One",
+        apple: "https://music.apple.com/us/search?term=Artist%20Name%20Album%20One"
+      },
+      {
+        title: "Album Two",
+        artist: "Another Artist",
+        score: 93,
+        cover: "cover-two",
+        review: "Warm, nostalgic and full of little moments I keep coming back to. This is the soundtrack to a perfect afternoon.",
+        favorite: "Your favorite track goes here",
+        spotify: "https://open.spotify.com/search/Another%20Artist%20Album%20Two",
+        apple: "https://music.apple.com/us/search?term=Another%20Artist%20Album%20Two"
+      },
+      {
+        title: "Album Three",
+        artist: "A Favorite Artist",
+        score: 91,
+        cover: "cover-three",
+        review: "Dreamy and a little heartbreaking. Some albums just make more sense the longer you sit with them.",
+        favorite: "Your favorite track goes here",
+        spotify: "https://open.spotify.com/search/A%20Favorite%20Artist%20Album%20Three",
+        apple: "https://music.apple.com/us/search?term=A%20Favorite%20Artist%20Album%20Three"
+      }
+    ];
+
+    const dialog = document.getElementById("review");
+    const content = document.getElementById("review-content");
+
+    document.querySelectorAll("[data-album]").forEach(button => {
+      button.addEventListener("click", () => {
+        const album = albums[Number(button.dataset.album)];
+
+        content.replaceChildren();
+
+        const cover = document.createElement("div");
+        cover.className = "review-cover cover " + album.cover;
+        const coverTitle = document.createElement("strong");
+        coverTitle.textContent = album.title;
+        cover.append(coverTitle);
+
+        const heading = document.createElement("h2");
+        heading.textContent = album.title;
+
+        const artist = document.createElement("p");
+        artist.className = "artist";
+        artist.textContent = album.artist;
+
+        const rating = document.createElement("p");
+        rating.textContent = "♡ My rating: " + album.score + "/100";
+
+        const review = document.createElement("p");
+        review.className = "review-text";
+        review.textContent = album.review;
+
+        const favorite = document.createElement("p");
+        favorite.className = "review-text";
+        favorite.textContent = "♫ Favorite track: " + album.favorite;
+
+        const links = document.createElement("div");
+        links.className = "music-links";
+
+        const spotify = document.createElement("a");
+        spotify.href = album.spotify;
+        spotify.target = "_blank";
+        spotify.rel = "noopener noreferrer";
+        spotify.textContent = "Listen on Spotify ↗";
+
+        const apple = document.createElement("a");
+        apple.href = album.apple;
+        apple.target = "_blank";
+        apple.rel = "noopener noreferrer";
+        apple.textContent = "Listen on Apple Music ↗";
+
+        links.append(spotify, apple);
+        content.append(cover, heading, artist, rating, review, favorite, links);
+        dialog.showModal();
+      });
+    });
+
+    document.getElementById("close-review").addEventListener("click", () => {
+      dialog.close();
+    });
+
+    dialog.addEventListener("click", event => {
+      if (event.target === dialog) dialog.close();
+    });
+  </script>
+</body>
+</html>
